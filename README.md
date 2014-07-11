@@ -31,7 +31,7 @@ Simple with just "compress these files and upload."
 
 TODO:
 
-- Finish implementation of Compressor and Uploader
+- Finish implementation of Uploader
 
 - Consider concurrent approach, e.g. compressing and uploading in parallel.
 
