@@ -1,6 +1,9 @@
 ### Project's test data
 testdir/
 
+### Project's config
+config.yml
+
 #################
 ## Eclipse
 #################

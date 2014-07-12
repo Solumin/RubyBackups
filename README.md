@@ -27,11 +27,28 @@ compress -> upload.
 
 This utility is NOT intended to be a full backup solution. No integrity
 checking, no automating backups, probably no incremental backups. Keeping It
-Simple with just "compress these files and upload."
+Simple with just "compress these files and upload." It doesn't even fetch and
+unpack the backups for you!
+
+**Required Gems:** aws-sdk, rubyzip
+
+**Configuring:**
+
+- main.rb: source\_dir and the three blacklists are defined here.
+
+- config.yml: Should be in the following format:
+
+    access_key_id: <YOUR AWS ACCESS KEY>
+    secret_access_key: <YOUR AWS SECRET KEY>
 
 TODO:
 
-- Finish implementation of Uploader
+- Show progress. File gathering, compression and upload all can be shown easily!
+
+- Loading information (source directory, blacklists, credentials, etc.) from
+  config file
+
+- Process for "initializing" the utility, making first config file
 
 - Consider concurrent approach, e.g. compressing and uploading in parallel.
 
@@ -44,3 +61,5 @@ TODO:
 - More comprehensive error handling and logging.
 
 - User Interface, both CLI and GUI.
+
+- Restoring from backup
