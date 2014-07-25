@@ -3,7 +3,7 @@ require "yaml"
 
 module RubyBackup
     def upload_init
-        AWS.config(YAML.load_file("config.yml"))
+        AWS.config(@@config[:AWS_config])
     end
 
     def upload(source_dir, archive_paths)

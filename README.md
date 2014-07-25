@@ -34,12 +34,21 @@ unpack the backups for you!
 
 **Configuring:**
 
-- main.rb: source\_dir and the three blacklists are defined here.
-
-- config.yml: Should be a YAML file in the following format:
+- config/config.yml: Should be a YAML file in the following format:
 ```
-    access_key_id: <YOUR AWS ACCESS KEY>
-    secret_access_key: <YOUR AWS SECRET KEY>
+    :AWS_config: {
+        access_key_id: <YOUR AWS ACCESS KEY>
+        secret_access_key: <YOUR AWS SECRET KEY>
+        }
+
+    :source_dir: <YOUR SOURCE DIR>
+    :dir_blacklist:
+        - <LIST OF DIRECTORIES>
+    :file_blacklist:
+        - <LIST OF FILES>
+    :ext_blacklist:
+        - <LIST OF EXTENSIONS>
+    
 ```
 
 TODO:

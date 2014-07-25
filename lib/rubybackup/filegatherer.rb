@@ -7,6 +7,8 @@ module RubyBackup
         # dirs and files are arrays of fully-qualified files that have src as the
         # prefix
         # exts is an array of file extensions, e.g. ['txt', 'jpg']
+        # dirs, files and exts are used to filter out files from the source
+        # directory
         def initialize(src, dirs, files, exts)
             @source_dir = src
             @dir_blacklist = dirs
@@ -39,8 +41,8 @@ module RubyBackup
                 Find.prune if FileTest.directory?(path) and @dir_blacklist.include?(path)
                 next if FileTest.symlink? path
                 if FileTest.file? path
-                    next if File.fnmatch?(@ext_pattern, path, File::FNM_EXTGLOB)
                     next if @file_blacklist.include? path
+                    next if File.fnmatch?(@ext_pattern, path, File::FNM_EXTGLOB)
                     @files << path
                 end
             end

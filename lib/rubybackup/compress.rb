@@ -2,14 +2,12 @@ require 'zip'
 
 module RubyBackup
     # Compression process:
-    # 1. Main creates temp dir for storying archives until upload
-    # 2. Main sends archive-file pairs to compresser():
+    # 1. Main sends archive-file pairs to compresser():
     # def compresser(archive, files)
-    # 3. Compressor compresses file list into the archive
-    # 4. Compressor returns full path of compressed archive.
+    # 2. Compressor compresses file list into an in-memory (stream) archive
+    # 3. Compressor returns a StringIO of the stream
     #
-    # Note that the full path is preserved in the compressed files.
-
+    # Note that the full path below source_dir is preserved in the compressed files.
 
     # Compress takes a list of files (fully qualified?) and
     # returns a StringIO that represents a compressed .zip archive of those files.
