@@ -1,0 +1,22 @@
+#!ruby
+
+require_relative "../lib/rubybackup"
+
+good_files = RubyBackup::FileGatherer.gather
+groups = RubyBackup::FileGroup.group(good_files)
+
+puts "#{groups.keys.length} file groups"
+puts "Do you want to compress and upload the test file to S3? (Y/N)"
+
+if STDIN.gets.match(/^[Yy]/)
+    RubyBackup::upload_init()
+    groups.each_pair do |name, files|
+        puts "Compressing #{name} files."
+        zipf = RubyBackup::ZipCompression.compress files
+        puts "\nUploading #{name} files."
+        RubyBackup::S3Upload.upload_file("%s.zip" % name, archive_paths)
+    end
+    puts "Compression and upload complete."
+else
+    puts "Upload canceled"
+end

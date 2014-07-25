@@ -34,7 +34,7 @@ unpack the backups for you!
 **Configuring:**
 
 - config/config.yml: Should be a YAML file in the following format:
-```
+```yaml
     :AWS_config: {
         access_key_id: <YOUR AWS ACCESS KEY>
         secret_access_key: <YOUR AWS SECRET KEY>
@@ -48,6 +48,13 @@ unpack the backups for you!
     :ext_blacklist:
         - <LIST OF EXTENSIONS>
     
+```
+
+**Running:**
+
+After configuring, run the app through the file in the bin/ directory:
+```
+    ruby bin/rubybackup
 ```
 
 TODO:
