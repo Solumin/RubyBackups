@@ -1,16 +1,18 @@
 require "aws-sdk"
 require "yaml"
 
-def upload_init
-    AWS.config(YAML.load_file("config.yml"))
-end
+module RubyBackup
+    def upload_init
+        AWS.config(YAML.load_file("config.yml"))
+    end
 
-def upload(source_dir, archive_paths)
-    s3 = AWS::S3.new
-    bucket_name = File.basename(source_dir).downcase.sub(/[^a-z0-9\-]/, '-')
-    bucket_name = "tsudol.#{bucket_name}-backup.#{Date.today.strftime("%Y.%m.%d")}"
+    def upload(source_dir, archive_paths)
+        s3 = AWS::S3.new
+        bucket_name = File.basename(source_dir).downcase.sub(/[^a-z0-9\-]/, '-')
+        bucket_name = "tsudol.#{bucket_name}-backup.#{Date.today.strftime("%Y.%m.%d")}"
 
-    bucket = s3.buckets.create(bucket_name)
+        bucket = s3.buckets.create(bucket_name)
 
-    archive_paths.each {|a| bucket.objects[File.basename(a)].write(:file => a) }
+        archive_paths.each {|a| bucket.objects[File.basename(a)].write(:file => a) }
+    end
 end
