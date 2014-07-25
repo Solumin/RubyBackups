@@ -16,9 +16,6 @@ module RubyBackup
         @@config[:source_dir]
     end
 
-    def RubyBackup.strip_source_dir(file)
-        file.gsub(@@config[:source_dir], '')
-    end
 end
 
 RubyBackup::load_config

@@ -9,10 +9,7 @@ module RubyBackup
             s = singles(filelist)
 
             zip_groups = (filelist - s).group_by { |f| f.match(group_pattern)[1] }
-            zip_groups.each_pair do |dir, files|
-                files.map! {|f| f.sub File.join(source_dir, dir, ''), '' }
-            end
-            zip_groups[""] = s.map { |f| f.sub File.join(source_dir, ''), '' }
+            zip_groups[""] = s
             return zip_groups
         end
 

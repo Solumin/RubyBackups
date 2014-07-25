@@ -1,25 +1,27 @@
 require 'zip'
 
 module RubyBackup
-    # Compression process:
-    # 1. Main sends archive-file pairs to compresser():
-    # def compresser(archive, files)
-    # 2. Compressor compresses file list into an in-memory (stream) archive
-    # 3. Compressor returns a StringIO of the stream
-    #
-    # Note that the full path below source_dir is preserved in the compressed files.
-
-    # Compress takes a list of files (fully qualified?) and
+    # Compress takes a list of files (fully qualified paths) and
     # returns a StringIO that represents a compressed .zip archive of those files.
-    def compress(files)
-        comp = Zip::OutputStream::write_buffer do |zstream|
-            files.each do |file|
-                zstream.put_next_entry file
-                zstream.write File.new(file).read
+    module ZipCompression
+        module_function
+
+        def compress(files)
+            comp = Zip::OutputStream::write_buffer do |zstream|
+                files.each do |file|
+                    zstream.put_next_entry strip_source_dir(file)
+                    zstream.write File.new(file).read
+                end
             end
+            comp.rewind
+            yield comp if block_given?
+            return comp
         end
-        comp.rewind
-        yield comp if block_given?
-        return comp
+
+        # Strips the leading source_directory prefix from a file's path
+        def strip_source_dir(file)
+            file.gsub(RubyBackup::source_dir + File::Separator, '')
+        end
+        private_class_method :strip_source_dir
     end
 end

@@ -15,15 +15,14 @@ The utility consists of a few components:
   in that subdirectory. (e.g. ~ is source dir, ['~/foo/bar1', '~/foo/bar2']
   returns ["foo" => ["~/foo/bar1", "~/foo/bar2"])
 
-- Compressor: Takes an archive name and a list of files to include and creates a
-  compressed archive in a temp directory. Returns the name of the archive.  
-  (Not yet implemented.)
+- Compressor: Takes a list of files and returns an IO object representing a
+  the compressed archive of the files.
 
-- Uploader: Takes a list of files to upload and, uh, uploads them.  
-  (Not yet implemented.)
+- Uploader: Takes a target name (e.g. "files.zip") and an IO object, then stores
+  the IO object under the given name.
 
 The workflow of the utility should be pretty obvious: gather -> group ->
-compress -> upload.
+[compress -> upload].
 
 This utility is NOT intended to be a full backup solution. No integrity
 checking, no automating backups, probably no incremental backups. Keeping It
@@ -52,11 +51,6 @@ unpack the backups for you!
 ```
 
 TODO:
-
-- Show progress. File gathering, compression and upload all can be shown easily!
-
-- Loading information (source directory, blacklists, credentials, etc.) from
-  config file
 
 - Process for "initializing" the utility, making first config file
 
