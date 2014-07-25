@@ -9,12 +9,12 @@ module RubyBackup
         # exts is an array of file extensions, e.g. ['txt', 'jpg']
         # dirs, files and exts are used to filter out files from the source
         # directory
-        def initialize(src, dirs, files, exts)
+        def initialize(src, dirs, files, exts, extp = nil)
             @source_dir = src
             @dir_blacklist = dirs
             @file_blacklist = files
             @ext_blacklist = exts
-            @ext_pattern = "*.{#{@ext_blacklist.join(",")}}"
+            @ext_pattern = extp or "*.{#{@ext_blacklist.join(",")}}"
             @files = nil
         end
 
@@ -49,9 +49,15 @@ module RubyBackup
             return @files
         end
 
+        def self.directory_info
+            RubyBackup::config.values_at(:source_dir, :dir_blacklist,
+                                          :file_blacklist, :ext_blacklist, :ext_pattern)
+        end
+        private_class_method :directory_info
+
         # Transparent class method of gather
-        def self.gather(src, d, f, e)
-            self.new(src, d, f, e).gather
+        def self.gather
+            self.new(*directory_info).gather
         end
     end
 end
