@@ -5,6 +5,7 @@ module RubyBackup
     module S3Upload
         module_function
         def upload_init
+            AWS.eager_autoload! AWS::S3
             AWS.config(RubyBackup::config[:AWS_config])
             @@s3 = AWS::S3.new
             bucket_dir = File.basename(RubyBackup::source_dir).downcase.sub(/[^a-z0-9\-]/, '-')
